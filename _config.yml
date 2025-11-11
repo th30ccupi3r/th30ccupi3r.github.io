@@ -153,7 +153,6 @@ paginate: 10
 baseurl: ""
 
 #
-
 # ------------ The following options are not recommended to be modified ------------------
 
 kramdown:
