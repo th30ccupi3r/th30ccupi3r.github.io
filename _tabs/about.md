@@ -4,37 +4,8 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-<div align="center">
-
-
-<pre>
-   ░██    ░██         ░██████                ░████                                               ░██ ░██████           
-   ░██    ░██        ░██   ░██              ░██ ░██                                                 ░██   ░██          
-░████████ ░████████        ░██             ░██ ░████  ░███████   ░███████  ░██    ░██ ░████████  ░██      ░██ ░██░████ 
-   ░██    ░██    ░██   ░█████              ░██░██░██ ░██    ░██ ░██    ░██ ░██    ░██ ░██    ░██ ░██  ░█████  ░███     
-   ░██    ░██    ░██       ░██             ░████ ░██ ░██        ░██        ░██    ░██ ░██    ░██ ░██      ░██ ░██      
-   ░██    ░██    ░██ ░██   ░██              ░██ ░██  ░██    ░██ ░██    ░██ ░██   ░███ ░███   ░██ ░██░██   ░██ ░██      
-    ░████ ░██    ░██  ░██████  ░██████████   ░████    ░███████   ░███████   ░█████░██ ░██░█████  ░██ ░██████  ░██      
-                                                                                      ░██                              
-                                                                                      ░██                                                                                                             
-</pre>
-
 
 <h3>hacker - Binary, Web, Mobile, Infrastructure, Cloud and Active Directory</h3>
-
-<img src="https://komarev.com/ghpvc/?username=th30ccupi3r&label=page%20haunts&color=8b0000&style=flat" alt="counter"/>
-
-
-
-<img src="https://img.shields.io/badge/OSCP-green?style=flat&logo=offensive-security&logoColor=white&labelColor=111" alt="OSCP Badge"/>
-<img src="https://img.shields.io/badge/OSCE-green?style=flat&logo=offensive-security&logoColor=white&labelColor=111" alt="OSCE Badge"/>
-<img src="https://img.shields.io/badge/OSWE-green?style=flat&logo=offensive-security&logoColor=white&labelColor=111" alt="OSWE Badge"/>
-<img src="https://img.shields.io/badge/CRTO-maroon?style=flat&logo=offensive-security&logoColor=white&labelColor=111" alt="CRTO Badge"/>
-
-</div>
-
-
----
 
 
 > "...and you will know my name, by the trail of the dead."
