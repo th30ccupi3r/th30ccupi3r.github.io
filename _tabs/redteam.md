@@ -5,13 +5,13 @@
 layout: page
 
 # what you want the tab to be called
-title: Exploits
+title: Redteam
 
 # Font Awesome icon class (shown in the sidebar/topbar)
 icon: fas fa-skull-crossbones
 
 # position in the sidebar (0 = top, then 1, 2, 3…)
-order: 3
+order: 2
 
 # where the page lives
 permalink: /redteam/
