@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
   <link rel="stylesheet" href="{{ '/assets/css/bitchx-theme.css' | relative_url }}">
-   <link rel="shortcut icon" href="{{ "/assets/favicon.ico" | prepend: site.baseurl | prepend: site.url }}" />
+   <link rel="shortcut icon" href="{{ "/assets/favicon.ico" | relative_url }}" />
 </head>
 <body data-baseurl="{{ site.baseurl | default: '' }}" data-github-url="{{ site.github_url }}" data-startup-tag="{{ page.startup_tag | default: site.startup_tag | default: site.title | default: 'bitchx' }}">
   <div class="desktop-gate" id="desktop-gate" aria-hidden="true">
