@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <link rel="stylesheet" href="{{ '/assets/css/bitchx-theme.css' | relative_url }}">
+</head>
+<body data-baseurl="{{ site.baseurl | default: '' }}" data-github-url="{{ site.github_url }}" data-startup-tag="{{ page.startup_tag | default: site.startup_tag | default: site.title | default: 'bitchx' }}">
+  <div class="desktop-gate" id="desktop-gate" aria-hidden="true">
+    <div class="desktop-gate-inner">
+      <p class="gate-kicker">BLACKHAT REMOTE TERMINAL</p>
+      <h2 class="gate-title glitch" data-text="DESKTOP ACCESS ONLY">DESKTOP ACCESS ONLY</h2>
+      <p class="gate-copy">This interface is locked to desktop-class terminals. Mobile sessions are sandboxed and denied.</p>
+      <p class="gate-copy gate-mono">error 0xD35K-ONLY :: reconnect from a desktop browser</p>
+    </div>
+  </div>
+  <div class="irc-shell">
+    <header class="statusbar">
+      <span class="ansi ansi-green">***</span>
+      <span>Connected to th30ccupi3r.github.io</span>
+      <span class="status-right">channel: #{{ page.channel | default: "blog" }}</span>
+    </header>
+
+    <div class="irc-main">
+      <aside class="channel-list">
+        <h1>{{ site.title }}</h1>
+        <nav>
+          <a href="{{ '/' | relative_url }}" class="{% if page.channel == 'blog' %}active{% endif %}">#blog</a>
+          <a href="{{ '/exploit/' | relative_url }}" class="{% if page.channel == 'exploit' %}active{% endif %}">#exploit</a>
+          <a href="{{ '/about/' | relative_url }}" class="{% if page.channel == 'about' %}active{% endif %}">#about</a>
+          <a href="{{ '/projects/' | relative_url }}" class="{% if page.channel == 'projects' %}active{% endif %}">#projects</a>
+          <a href="{{ site.github_url }}">#github</a>
+        </nav>
+      </aside>
+
+      <main class="chat-pane">
+        <section class="chat-log" id="chat-log">
+          <p class="chat-line replay"><span class="timestamp">00:00</span> <span class="ansi ansi-cyan">-!-</span> <span class="ansi ansi-green">Welcome to irssi mode</span></p>
+          <p class="chat-line replay"><span class="timestamp">00:00</span> <span class="ansi ansi-yellow">-!-</span> <span class="ansi ansi-red">MOTD:</span> keep logs public, keep opsec private.</p>
+          <div class="chat-line replay graffiti-line" id="startup-graffiti"></div>
+          <p class="chat-line replay"><span class="timestamp">00:01</span> <span class="ansi ansi-cyan">-!-</span> Joined #{{ page.channel | default: "blog" }}</p>
+
+          {% if page.channel == "blog" %}
+            {% for post in site.posts %}
+              <p class="chat-line replay"><span class="timestamp">{{ post.date | date: "%H:%M" }}</span><span class="prefix {% if post.rank == '@' %}op{% elsif post.rank == '+' %}voice{% endif %}">{{ post.rank }}</span><span class="nick" style="--nick-color: {{ post.nick_color | default: '#5fd7ff' }};">{{ post.nick | default: "guest" }}</span><a class="msg-link" href="{{ post.url | relative_url }}">{{ post.title }}</a></p>
+            {% else %}
+              <p class="chat-line replay"><span class="timestamp">00:02</span> <span class="ansi ansi-yellow">-!-</span> No blog messages yet.</p>
+            {% endfor %}
+          {% endif %}
+
+          {% if page.channel == "exploit" %}
+            {% for item in site.data.exploits %}
+              <p class="chat-line replay"><span class="timestamp">{{ item.time | default: "00:10" }}</span><span class="prefix {% if item.rank == '@' %}op{% elsif item.rank == '+' %}voice{% endif %}">{{ item.rank }}</span><span class="nick" style="--nick-color: {{ item.nick_color | default: '#5fd7ff' }};">{{ item.nick | default: "guest" }}</span><a class="msg-link" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">{{ item.title }}</a></p>
+            {% else %}
+              <p class="chat-line replay"><span class="timestamp">00:11</span> <span class="ansi ansi-yellow">-!-</span> No exploit links configured.</p>
+            {% endfor %}
+          {% endif %}
+
+          {% if page.channel == "about" %}
+            <p class="chat-line replay"><span class="timestamp">00:09</span><span class="prefix {% if page.rank == '@' %}op{% elsif page.rank == '+' %}voice{% endif %}">{{ page.rank }}</span><span class="nick" style="--nick-color: {{ page.nick_color | default: '#87ff87' }};">{{ page.nick | default: "sysop" }}</span><span class="msg-text">{{ page.title }}</span></p>
+            <article class="chat-line replay post-content channel-content">{{ content }}</article>
+          {% endif %}
+
+          {% if page.channel == "projects" %}
+            <div class="chat-line replay project-line">
+              <span class="timestamp">00:09</span><span class="prefix {% if page.rank == '@' %}op{% elsif page.rank == '+' %}voice{% endif %}">{{ page.rank }}</span><span class="nick" style="--nick-color: {{ page.nick_color | default: '#87ff87' }};">{{ page.nick | default: "sysop" }}</span><span class="msg-text project-links">{{ content }}</span>
+            </div>
+          {% endif %}
+        </section>
+
+        <footer class="inputbar">
+          <span>[{{ page.channel | default: "blog" }}]</span>
+          <input
+            id="command-input"
+            type="text"
+            value=""
+            placeholder="Type /help, /join #blog, /msg nick hello, /tag word"
+            aria-label="channel command"
+            autocomplete="off"
+            spellcheck="false"
+          >
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <script src="{{ '/assets/js/bitchx-theme.js' | relative_url }}"></script>
+</body>
+</html>

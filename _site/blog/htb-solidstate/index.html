@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSINT - VulnOs | th3_0ccupi3r</title>
+  <link rel="stylesheet" href="/assets/css/bitchx-theme.css">
+</head>
+<body data-baseurl="" data-github-url="https://github.com/th30ccupi3r" data-startup-tag="th3_0ccupi3r">
+  <div class="desktop-gate" id="desktop-gate" aria-hidden="true">
+    <div class="desktop-gate-inner">
+      <p class="gate-kicker">BLACKHAT REMOTE TERMINAL</p>
+      <h2 class="gate-title glitch" data-text="DESKTOP ACCESS ONLY">DESKTOP ACCESS ONLY</h2>
+      <p class="gate-copy">This interface is locked to desktop-class terminals. Mobile sessions are sandboxed and denied.</p>
+      <p class="gate-copy gate-mono">error 0xD35K-ONLY :: reconnect from a desktop browser</p>
+    </div>
+  </div>
+  <div class="irc-shell">
+    <header class="statusbar">
+      <span class="ansi ansi-green">***</span>
+      <span>Private message with t</span>
+      <span class="status-right">2026-03-27 17:40</span>
+    </header>
+
+    <div class="irc-main">
+      <aside class="channel-list">
+        <h1>th3_0ccupi3r</h1>
+        <nav>
+          <a href="/">#blog</a>
+          <a href="/exploit/">#exploit</a>
+          <a href="/about/">#about</a>
+          <a href="/projects/">#projects</a>
+          <a href="https://github.com/th30ccupi3r">#github</a>
+        </nav>
+      </aside>
+
+      <main class="chat-pane">
+        <section class="chat-log post-log" id="chat-log">
+          <p class="chat-line replay"><span class="timestamp">17:40</span> <span class="ansi ansi-cyan">-></span> *msg* from t</p>
+          <div class="chat-line replay graffiti-line" id="startup-graffiti"></div>
+          <p class="chat-line replay"><span class="timestamp">17:40</span><span class="prefix "></span><span class="nick" style="--nick-color: #b5b0cf;">t</span><span class="msg-text">OSINT - VulnOs</span></p>
+          <article class="chat-line replay post-content"><p>We begin with a homepage for a software development company called Oxford Software International, clicking around we get some information on the “about” page about the Owner, including his name and when the company was founded. This is all great stuff to note down as it could give us insight on the types of passwords the user uses.</p>
+
+<p>If we download the profile image and drop it into an online EXIF reader, we can see the GPS locations where the image was taken:</p>
+
+<p>Looking this up on Google Maps shows us the full address:</p>
+
+<p>If we search for the company domain name “vulnos.co.uk” on Twitter we will find the following account:</p>
+
+<p>We also notice from Nikhil’s username that it appears to end with his birth year “1977”, we also note this down.</p>
+
+<p>If we scroll through his tweets a little we can see a picture with a plane ticket for vulnair.co.uk</p>
+
+<p>If we crop the image and upload just the QR code to an online scanner like this we can see the following:</p>
+
+<p>The Vulnair site has a link to a /mybooking endpoint that asks for Booking Reference and Passenger Surname.</p>
+
+<p>Looking this up also gives us the user’s phone number:</p>
+
+<p>Ok, we need to expand our attack surface as we have exhausted everything that we have so far, so I checked on the certificate transparency logs for additional subdomains. Remember vulnos.co.uk is the OSINT domain for the challenge, we need to add this subdomain to our assigned subdomain of ctfio.com to access it.</p>
+
+<p>Browsing to https://webmail-srv-01.$our-assigned-subdomain$.ctfio.com asks us to login, there is also a password reset page. Fortunately, it’s asking for information that we already have yay!</p>
+
+<p>When enter the email address of email: nikhil.singh@vulnos.co.uk this prompts us for a postcode and phone number which we already have :D</p>
+
+<p>To view the message we click on the subject “Portal Access”:</p>
+
+<p>Nikhil received an email from support telling him they reset his password to the admin portal (wait, there’s an admin portal?!).</p>
+
+<p>I know there was some crazy “phone hacking” scandal a few years back in the UK. I briefly looked into it at the time and I remembered that it appeared that they were using built-in functionality a lot of UK mobile carriers implement. If the user is on a call, you can call their number to get through to their voicemail, you usually need to type in a special code to access to it, so I just googled it.</p>
+
+<p>So I dialed Nikhil’s number and hit asterisk and I got an automated message that said “to access your voice mail please enter the 4-digit code”.</p>
+
+<p>Well, we came across a couple of theses in our travels, his year of birth (1977) and the date the company was registered (1998). I punched in 1977 and BOOM!!! I can hear his voicemail message that says: “Hi Nikhil, I’m just calling with the password for the admin portal it’s y<strong>**</strong><strong>**</strong>e”</p>
+
+<p>It’s pretty obvious here that I’ve overlooked the admin panel, so let’s pull out gobuster and do some active subdomain brute-forcing, this tells us that the admin subdomain exists:</p>
+
+<p>Nice, it wants us to login, we put in the username from the webmail (nikhil.s001) and the password from the voicemail</p>
+
+<p>This grants us access to the admin portal.</p>
+
+<p>Game Over!</p>
+
+</article>
+          <p class="chat-line replay"><a class="msg-link" href="/">[return to #blog]</a></p>
+        </section>
+
+        <footer class="inputbar">
+          <span>[query t]</span>
+          <input
+            id="command-input"
+            type="text"
+            value=""
+            placeholder="Type /help, /join #blog, /msg t hi, /tag word"
+            aria-label="pm command"
+            autocomplete="off"
+            spellcheck="false"
+          >
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <script src="/assets/js/bitchx-theme.js"></script>
+</body>
+</html>

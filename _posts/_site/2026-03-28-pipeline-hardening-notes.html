@@ -1,0 +1,110 @@
+<p>Another heavy sample post to exercise your UI with substantial markdown content.</p>
+
+<p>During the maintenance window we identified that reliability incidents were less about one critical bug and more about weak boundaries between build, test, and release stages.<br />
+The objective became simple: make every stage auditable and fail fast with clear, human-readable diagnostics.</p>
+
+<h2 id="topology-snapshot">Topology Snapshot</h2>
+
+<p><img src="/assets/images/wallpaper.png" alt="Pipeline Snapshot" /></p>
+
+<h2 id="build-stage-controls">Build Stage Controls</h2>
+
+<p>We enforce immutable dependencies, deterministic lockfiles, and repeatable build containers.</p>
+
+<div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> ruby:3.3-alpine</span>
+
+<span class="k">WORKDIR</span><span class="s"> /site</span>
+<span class="k">COPY</span><span class="s"> Gemfile Gemfile.lock ./</span>
+<span class="k">RUN </span>bundle config <span class="nb">set </span>deployment <span class="s1">'true'</span> <span class="se">\
+</span> <span class="o">&amp;&amp;</span> bundle config <span class="nb">set </span>without <span class="s1">'development test'</span> <span class="se">\
+</span> <span class="o">&amp;&amp;</span> bundle <span class="nb">install</span> <span class="nt">--jobs</span> 4 <span class="nt">--retry</span> 3
+
+<span class="k">COPY</span><span class="s"> . .</span>
+<span class="k">CMD</span><span class="s"> ["bundle", "exec", "jekyll", "build"]</span>
+</code></pre></div></div>
+
+<h2 id="ci-policy-example">CI Policy Example</h2>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Site CI</span>
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span> <span class="pi">[</span> <span class="nv">main</span> <span class="pi">]</span>
+  <span class="na">pull_request</span><span class="pi">:</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">lint-build</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v4</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">ruby/setup-ruby@v1</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">ruby-version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">3.3"</span>
+          <span class="na">bundler-cache</span><span class="pi">:</span> <span class="kc">true</span>
+      <span class="pi">-</span> <span class="na">run</span><span class="pi">:</span> <span class="s">bundle exec jekyll doctor</span>
+      <span class="pi">-</span> <span class="na">run</span><span class="pi">:</span> <span class="s">bundle exec jekyll build --trace</span>
+</code></pre></div></div>
+
+<h2 id="failure-taxonomy">Failure Taxonomy</h2>
+
+<p>Use a compact failure taxonomy so incidents can be grouped and tracked:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">cfg_parse</code> for configuration and data parsing errors.</li>
+  <li><code class="language-plaintext highlighter-rouge">dep_drift</code> for lockfile or package mismatches.</li>
+  <li><code class="language-plaintext highlighter-rouge">render_regression</code> for template and styling breakage.</li>
+  <li><code class="language-plaintext highlighter-rouge">runtime_env</code> for host-specific behavior differences.</li>
+  <li><code class="language-plaintext highlighter-rouge">artifact_integrity</code> for checksum/signature mismatches.</li>
+</ul>
+
+<p>The key is consistency, not perfect categorization.</p>
+
+<h2 id="command-trace">Command Trace</h2>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[12:01:11] ci-agent: checkout complete
+[12:01:36] ci-agent: bundle install complete
+[12:01:48] ci-agent: jekyll doctor -&gt; no issues found
+[12:02:03] ci-agent: jekyll build -&gt; failed (cfg_parse)
+[12:02:06] ci-agent: parser error in _data/startup.yml line 4
+[12:03:19] operator: migrated startup banner to static JS
+[12:03:34] ci-agent: jekyll build -&gt; success
+</code></pre></div></div>
+
+<h2 id="recovery-pattern">Recovery Pattern</h2>
+
+<p>When a deploy fails mid-window, we follow this order:</p>
+
+<ol>
+  <li>Stop new config edits.</li>
+  <li>Restore known good artifacts.</li>
+  <li>Reproduce failure in a minimal branch.</li>
+  <li>Patch one variable at a time.</li>
+  <li>Tag and publish postmortem notes.</li>
+</ol>
+
+<p>The most expensive failure mode is changing many variables at once and losing causal attribution.</p>
+
+<h2 id="javascript-utility-for-gate-diagnostics">JavaScript Utility for Gate Diagnostics</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nf">evaluateClientMode</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">isSmallViewport</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nf">matchMedia</span><span class="p">(</span><span class="dl">"</span><span class="s2">(max-width: 960px)</span><span class="dl">"</span><span class="p">).</span><span class="nx">matches</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">isCoarsePointer</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nf">matchMedia</span><span class="p">(</span><span class="dl">"</span><span class="s2">(pointer: coarse)</span><span class="dl">"</span><span class="p">).</span><span class="nx">matches</span><span class="p">;</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="na">mode</span><span class="p">:</span> <span class="nx">isSmallViewport</span> <span class="o">||</span> <span class="nx">isCoarsePointer</span> <span class="p">?</span> <span class="dl">"</span><span class="s2">mobile-blocked</span><span class="dl">"</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">desktop-allowed</span><span class="dl">"</span><span class="p">,</span>
+    <span class="nx">isSmallViewport</span><span class="p">,</span>
+    <span class="nx">isCoarsePointer</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nf">table</span><span class="p">(</span><span class="nf">evaluateClientMode</span><span class="p">());</span>
+</code></pre></div></div>
+
+<h2 id="extended-notes">Extended Notes</h2>
+
+<p>This paragraph intentionally runs long with repeated structure to emulate realistic technical blogging volume and to validate that your interface remains readable with heavy prose.<br />
+A well-designed terminal-style site should still be comfortable at high content density, with clear spacing between paragraphs, headings, and code blocks.</p>
+
+<p>Another long paragraph continues the stress test by layering descriptive writing over implementation details.<br />
+In production, these sections become valuable because they preserve context that can otherwise be lost between isolated commit messages.</p>
+
+<p>Closing note: documentation quality is part of security posture.<br />
+Ambiguous ops notes are an incident multiplier.</p>

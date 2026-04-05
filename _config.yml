@@ -1,0 +1,22 @@
+title: th3_0ccupi3r
+description: IRC-style Jekyll theme
+timezone: Europe/London
+markdown: kramdown
+highlighter: rouge
+permalink: /blog/:title/
+startup_tag: th3_0ccupi3r
+github_url: https://github.com/th30ccupi3r
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      rank: ""
+      nick: guest
+      nick_color: "#5fd7ff"
