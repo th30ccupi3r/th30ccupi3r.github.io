@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} | {{ site.title }}</title>
+  <link rel="stylesheet" href="{{ '/assets/css/bitchx-theme.css' | relative_url }}">
+</head>
+<body data-baseurl="{{ site.baseurl | default: '' }}" data-github-url="{{ site.github_url }}" data-startup-tag="{{ page.startup_tag | default: site.startup_tag | default: site.title | default: 'bitchx' }}">
+  <div class="desktop-gate" id="desktop-gate" aria-hidden="true">
+    <div class="desktop-gate-inner">
+      <p class="gate-kicker">BLACKHAT REMOTE TERMINAL</p>
+      <h2 class="gate-title glitch" data-text="DESKTOP ACCESS ONLY">DESKTOP ACCESS ONLY</h2>
+      <p class="gate-copy">This interface is locked to desktop-class terminals. Mobile sessions are sandboxed and denied.</p>
+      <p class="gate-copy gate-mono">error 0xD35K-ONLY :: reconnect from a desktop browser</p>
+    </div>
+  </div>
+  <div class="irc-shell">
+    <header class="statusbar">
+      <span class="ansi ansi-green">***</span>
+      <span>Private message with {{ page.nick | default: "guest" }}</span>
+      <span class="status-right">{{ page.date | date: "%d/%m/%Y" }}</span>
+    </header>
+
+    <div class="irc-main">
+      <aside class="channel-list">
+        <h1>{{ site.title }}</h1>
+        <nav>
+          <a href="{{ '/' | relative_url }}">#blog</a>
+          <a href="{{ '/exploit/' | relative_url }}">#exploit</a>
+          <a href="{{ '/about/' | relative_url }}">#about</a>
+          <a href="{{ '/projects/' | relative_url }}">#projects</a>
+          <a href="{{ site.github_url }}">#github</a>
+        </nav>
+      </aside>
+
+      <main class="chat-pane">
+        <section class="chat-log post-log" id="chat-log">
+          <p class="chat-line replay"><span class="timestamp">{{ page.date | date: "%d/%m/%Y" }}</span> <span class="ansi ansi-cyan">-></span> *msg* from {{ page.nick | default: "guest" }}</p>
+          <div class="chat-line replay graffiti-line" id="startup-graffiti"></div>
+          <p class="chat-line replay"><span class="timestamp">{{ page.date | date: "%d/%m/%Y" }}</span><span class="prefix {% if page.rank == '@' %}op{% elsif page.rank == '+' %}voice{% endif %}">{{ page.rank }}</span><span class="nick" style="--nick-color: {{ page.nick_color | default: '#5fd7ff' }};">{{ page.nick | default: "guest" }}</span><span class="msg-text">{{ page.title }}</span></p>
+          <article class="chat-line replay post-content">{{ content }}</article>
+          <p class="chat-line replay"><a class="msg-link" href="{{ '/' | relative_url }}">[return to #blog]</a></p>
+        </section>
+
+        <footer class="inputbar">
+          <span>[query {{ page.nick | default: "guest" }}]</span>
+          <input
+            id="command-input"
+            type="text"
+            value=""
+            placeholder="Type /help, /join #blog, /msg {{ page.nick | default: 'guest' }} hi, /tag word"
+            aria-label="pm command"
+            autocomplete="off"
+            spellcheck="false"
+          >
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <script src="{{ '/assets/js/bitchx-theme.js' | relative_url }}"></script>
+</body>
+</html>

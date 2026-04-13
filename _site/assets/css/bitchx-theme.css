@@ -1,0 +1,683 @@
+:root {
+  --bg: #000000;
+  --panel: #100d1a;
+  --line: #231b35;
+  --text: #b7b2d1;
+  --muted: #7f779d;
+  --green: #9ea4ff;
+  --cyan: #8db4ff;
+  --yellow: #d8b6ff;
+  --red: #bf9bff;
+  --magenta: #ff5fd7;
+  --blue: #5f5fff;
+  --op: #c1a8ff;
+  --voice: #9cbcff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 20% 15%, rgba(88, 16, 126, 0.35), transparent 38%),
+    radial-gradient(circle at 85% 22%, rgba(42, 8, 94, 0.35), transparent 34%),
+    linear-gradient(130deg, #050507 0%, #0c0818 54%, #04040a 100%);
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: "Lucida Console", "Courier New", monospace;
+}
+
+a {
+  color: inherit;
+}
+
+.irc-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.statusbar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--line);
+  background: rgba(8, 8, 11, 0.62);
+  backdrop-filter: blur(2px);
+  color: #bcbcbc;
+  font-size: 0.88rem;
+}
+
+.status-right {
+  margin-left: auto;
+  color: var(--muted);
+}
+
+.irc-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 0;
+}
+
+.channel-list {
+  border-right: 1px solid var(--line);
+  background: rgba(15, 15, 18, 0.56);
+  backdrop-filter: blur(2px);
+  padding: 1rem 0.6rem;
+}
+
+.channel-list h1 {
+  margin: 0 0 1rem;
+  padding: 0 0.5rem;
+  font-size: 1rem;
+  color: var(--green);
+  letter-spacing: 0.04em;
+}
+
+.channel-list nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.channel-list a {
+  text-decoration: none;
+  padding: 0.45rem 0.5rem;
+  border-left: 2px solid transparent;
+  color: #cfcfcf;
+}
+
+.channel-list a:hover,
+.channel-list a.active {
+  background: #171717;
+  border-left-color: var(--green);
+}
+
+.chat-pane {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  background: transparent;
+}
+
+.chat-log {
+  position: relative;
+  z-index: 4;
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.85rem 1rem;
+  background: transparent;
+}
+
+.chat-line {
+  margin: 0 0 0.4rem;
+  line-height: 1.45;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.chat-line.project-line {
+  display: block;
+}
+
+.chat-line.replay {
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.chat-line.replay.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timestamp {
+  color: #5f5f5f;
+  margin-right: 0.55rem;
+}
+
+.prefix {
+  display: inline-block;
+  color: #b8b8b8;
+}
+
+.prefix:empty {
+  display: none;
+}
+
+.prefix:not(:empty) {
+  min-width: 1ch;
+}
+
+.prefix.op {
+  color: var(--op);
+}
+
+.prefix.voice {
+  color: var(--voice);
+}
+
+.nick {
+  color: var(--nick-color, #5fd7ff);
+  margin-right: 0.3rem;
+}
+
+.nick::before {
+  content: "<";
+}
+
+.nick::after {
+  content: ">";
+}
+
+.msg-link {
+  color: #c7c2e6;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.msg-link:hover {
+  color: #e0dcff;
+}
+
+.post-content {
+  margin-top: 0.9rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid #1d1d1d;
+  background: #0b0b0b;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.channel-content {
+  margin-top: 0.45rem;
+}
+
+.project-links p {
+  display: inline;
+  margin: 0;
+}
+
+.project-links a {
+  color: #c7c2e6;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.project-links a:hover {
+  color: #e0dcff;
+}
+
+.post-content p:first-child {
+  margin-top: 0;
+}
+
+.post-content p:last-child {
+  margin-bottom: 0;
+}
+
+.post-content code {
+  font-family: "Cascadia Mono", "Consolas", "Lucida Console", "Courier New", monospace;
+  font-size: 0.9em;
+  background: #11111a;
+  border: 1px solid #252338;
+  border-radius: 2px;
+  padding: 0.08rem 0.28rem;
+  color: #d6d2ef;
+  overflow-wrap: anywhere;
+}
+
+.post-content pre,
+.post-content .highlight {
+  margin: 0.75rem 0;
+  background: #090912;
+  border: 1px solid #2a2740;
+  border-radius: 3px;
+  overflow-x: auto;
+}
+
+.post-content pre code {
+  display: block;
+  background: transparent;
+  border: none;
+  padding: 0.68rem 0.78rem;
+  color: #d6d2ef;
+  overflow-wrap: normal;
+}
+
+.post-content .highlight pre {
+  margin: 0;
+}
+
+/* Rouge token colors */
+.post-content .highlight .c,
+.post-content .highlight .c1,
+.post-content .highlight .cm,
+.post-content .highlight .cs {
+  color: #7b7896;
+  font-style: italic;
+} /* comments */
+
+.post-content .highlight .cp,
+.post-content .highlight .cpf {
+  color: #ff9ed1;
+} /* preprocessor / includes */
+
+.post-content .highlight .k,
+.post-content .highlight .kc,
+.post-content .highlight .kd,
+.post-content .highlight .kn,
+.post-content .highlight .kp,
+.post-content .highlight .kr,
+.post-content .highlight .kt {
+  color: #caa6ff;
+  font-weight: 600;
+} /* keywords / types */
+
+.post-content .highlight .nb,
+.post-content .highlight .bp {
+  color: #8fd3ff;
+} /* builtins / pseudo builtins */
+
+.post-content .highlight .nc,
+.post-content .highlight .nl,
+.post-content .highlight .nn,
+.post-content .highlight .no {
+  color: #7ee7d8;
+} /* classes / labels / namespaces / constants */
+
+.post-content .highlight .nf,
+.post-content .highlight .fm {
+  color: #8ab6ff;
+} /* function names */
+
+.post-content .highlight .na,
+.post-content .highlight .nv,
+.post-content .highlight .vc,
+.post-content .highlight .vg,
+.post-content .highlight .vi,
+.post-content .highlight .nx {
+  color: #b7f1ff;
+} /* attributes / variables / names */
+
+.post-content .highlight .s,
+.post-content .highlight .s1,
+.post-content .highlight .s2,
+.post-content .highlight .sa,
+.post-content .highlight .sb,
+.post-content .highlight .sc,
+.post-content .highlight .se,
+.post-content .highlight .sh,
+.post-content .highlight .si,
+.post-content .highlight .sr,
+.post-content .highlight .ss,
+.post-content .highlight .sx {
+  color: #9de0ff;
+} /* strings */
+
+.post-content .highlight .m,
+.post-content .highlight .mb,
+.post-content .highlight .mf,
+.post-content .highlight .mh,
+.post-content .highlight .mi,
+.post-content .highlight .il,
+.post-content .highlight .mo {
+  color: #ffcf8a;
+} /* numbers */
+
+.post-content .highlight .o,
+.post-content .highlight .ow {
+  color: #d5b0ff;
+} /* operators */
+
+.post-content .highlight .p {
+  color: #cfcbe7;
+} /* punctuation */
+
+.post-content .highlight .nt {
+  color: #ffb2d9;
+} /* tags */
+
+.post-content .highlight .err {
+  color: #ff9090;
+  background: transparent;
+} /* lexer errors */
+
+/* Bash / shell tuning */
+.post-content .language-bash .highlight .nb,
+.post-content .language-shell .highlight .nb,
+.post-content .language-sh .highlight .nb {
+  color: #8ff7c6;
+  font-weight: 600;
+} /* shell builtins / common commands */
+
+.post-content .language-bash .highlight .nv,
+.post-content .language-shell .highlight .nv,
+.post-content .language-sh .highlight .nv {
+  color: #ffd27a;
+} /* variables and prompts like $SHELL / $ */
+
+.post-content .language-bash .highlight .nt,
+.post-content .language-shell .highlight .nt,
+.post-content .language-sh .highlight .nt {
+  color: #ff9ed1;
+} /* flags like -al / -writable */
+
+.post-content .language-bash .highlight .o,
+.post-content .language-shell .highlight .o,
+.post-content .language-sh .highlight .o {
+  color: #b8b8c8;
+} /* prompt brackets, pipes, redirects */
+
+.post-content .language-bash .highlight .k,
+.post-content .language-bash .highlight .ow,
+.post-content .language-shell .highlight .k,
+.post-content .language-shell .highlight .ow,
+.post-content .language-sh .highlight .k,
+.post-content .language-sh .highlight .ow {
+  color: #caa6ff;
+  font-weight: 600;
+} /* shell keywords like for/in/do */
+
+.post-content .language-bash .highlight .c,
+.post-content .language-bash .highlight .c1,
+.post-content .language-shell .highlight .c,
+.post-content .language-shell .highlight .c1,
+.post-content .language-sh .highlight .c,
+.post-content .language-sh .highlight .c1 {
+  color: #6fbf73;
+  font-style: italic;
+} /* shell comments / shebang */
+
+.inputbar {
+  position: relative;
+  z-index: 5;
+  border-top: 1px solid var(--line);
+  padding: 0.6rem 0.8rem;
+  background: rgba(9, 9, 12, 0.62);
+  backdrop-filter: blur(2px);
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+  font-size: 0.88rem;
+}
+
+.inputbar span {
+  color: var(--green);
+}
+
+.inputbar input {
+  flex: 1;
+  border: 1px solid #151515;
+  background: #020202;
+  color: #bcbcbc;
+  padding: 0.42rem 0.55rem;
+  font: inherit;
+}
+
+.inputbar input:focus {
+  outline: none;
+  border-color: #2a2a2a;
+}
+
+.inputbar input::placeholder {
+  color: #626262;
+}
+
+.chat-line.cmd-user {
+  color: #d7d7d7;
+}
+
+.chat-line.cmd-system {
+  color: #9f9f9f;
+}
+
+.ansi {
+  font-weight: 700;
+}
+
+.ansi-green {
+  color: var(--green);
+}
+
+.ansi-cyan {
+  color: var(--cyan);
+}
+
+.ansi-yellow {
+  color: var(--yellow);
+}
+
+.ansi-red {
+  color: var(--red);
+}
+
+.ansi-magenta {
+  color: var(--magenta);
+}
+
+.ansi-blue {
+  color: var(--blue);
+}
+
+.desktop-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(90, 18, 120, 0.28), transparent 42%),
+    radial-gradient(circle at 76% 74%, rgba(35, 10, 82, 0.3), transparent 40%),
+    linear-gradient(155deg, #030307 0%, #0a0a11 62%, #020204 100%);
+  color: #d6d1f0;
+}
+
+.desktop-gate.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.4rem;
+}
+
+.desktop-gate-inner {
+  width: min(760px, 100%);
+  border: 1px solid #2a2140;
+  background: rgba(9, 9, 14, 0.9);
+  box-shadow: 0 0 40px rgba(28, 14, 58, 0.5);
+  padding: 1.15rem 1rem 1.25rem;
+}
+
+.gate-kicker {
+  margin: 0 0 0.6rem;
+  color: #8f85b0;
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
+}
+
+.gate-title {
+  margin: 0 0 0.8rem;
+  color: #d8b6ff;
+  font-size: clamp(1.55rem, 5.5vw, 2.65rem);
+  line-height: 1;
+  letter-spacing: 0.08em;
+}
+
+.gate-copy {
+  margin: 0.35rem 0 0;
+  color: #b5aecf;
+  font-size: 0.93rem;
+}
+
+.gate-mono {
+  color: #8f89aa;
+}
+
+.glitch {
+  position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.glitch::before {
+  color: #7fa8ff;
+  transform: translate(1px, 0);
+  clip-path: polygon(0 2%, 100% 2%, 100% 44%, 0 44%);
+  animation: gate-glitch-a 1.8s infinite steps(2, end);
+}
+
+.glitch::after {
+  color: #ff8fd9;
+  transform: translate(-1px, 0);
+  clip-path: polygon(0 58%, 100% 58%, 100% 100%, 0 100%);
+  animation: gate-glitch-b 1.35s infinite steps(2, end);
+}
+
+@keyframes gate-glitch-a {
+  0%, 100% { transform: translate(1px, 0); }
+  20% { transform: translate(-1px, -1px); }
+  40% { transform: translate(2px, 1px); }
+  60% { transform: translate(-2px, 0); }
+  80% { transform: translate(1px, -1px); }
+}
+
+@keyframes gate-glitch-b {
+  0%, 100% { transform: translate(-1px, 0); }
+  25% { transform: translate(2px, 1px); }
+  50% { transform: translate(-2px, -1px); }
+  75% { transform: translate(1px, 0); }
+}
+
+.graffiti-line {
+  margin: 0.45rem 0 0.65rem;
+}
+
+.ansi-graffiti {
+  margin: 0;
+  display: block;
+  color: #d7d7ff;
+  line-height: 1;
+  font-size: 0.92rem;
+  letter-spacing: 0;
+  white-space: pre;
+  word-break: normal;
+  overflow-wrap: normal;
+  font-family: "Cascadia Mono", "Consolas", "Lucida Console", "Courier New", monospace;
+  font-variant-ligatures: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.ansi-graffiti::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 850px) {
+  html,
+  body {
+    min-height: 100dvh;
+    background-attachment: scroll;
+  }
+
+  .irc-main {
+    grid-template-columns: 1fr;
+  }
+
+  .statusbar {
+    flex-wrap: wrap;
+    row-gap: 0.3rem;
+    padding: 0.7rem 0.8rem;
+  }
+
+  .status-right {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .channel-list {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    padding: 0.7rem 0.55rem;
+  }
+
+  .channel-list nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .channel-list a {
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    padding: 0.4rem 0.45rem;
+  }
+
+  .channel-list a:hover,
+  .channel-list a.active {
+    border-left-color: transparent;
+    border-bottom-color: var(--green);
+  }
+
+  .chat-log {
+    padding: 0.8rem 0.75rem;
+  }
+
+  .inputbar {
+    flex-wrap: wrap;
+    align-items: stretch;
+    padding: 0.6rem 0.75rem calc(0.6rem + env(safe-area-inset-bottom, 0));
+  }
+
+  .inputbar span {
+    width: 100%;
+  }
+
+  .inputbar input {
+    min-width: 0;
+  }
+
+  .ansi-graffiti {
+    font-size: 0.62rem;
+    line-height: 1.05;
+  }
+}
+
+@media (max-width: 560px) {
+  .statusbar,
+  .inputbar,
+  .chat-log,
+  .channel-list {
+    font-size: 0.82rem;
+  }
+
+  .channel-list h1 {
+    margin-bottom: 0.7rem;
+  }
+
+  .post-content {
+    padding: 0.65rem;
+  }
+
+  .ansi-graffiti {
+    font-size: 0.5rem;
+  }
+}
