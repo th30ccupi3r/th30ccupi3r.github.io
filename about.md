@@ -8,28 +8,33 @@ rank: "@"
 nick_color: "#ffd75f"
 ---
 
-I’ve been tearing into machines since I was six. My first playground was an Amiga 500, “educational games” and all. They wanted to teach me schoolwork. I wanted to see how the machine really worked.
+I’ve been terror since before the high school era. At the age of six I recieved my first computer, an Amiga 500. The intention from my parents was for it to teach me maths and english but I wanted to see how the machine really worked.
 
-By my pre-teen years, I hit my first real wall: my mum’s Windows 95 laptop, password-locked. She wouldn’t give it to me. I didn’t need it—I found ESC. Suddenly, the barrier vanished, and so began a lifelong obsession: what’s behind the lock, and how do I get there?
+By my pre-teen years, I hit my first real wall: my mum’s Windows 95 laptop which was password locked. She wouldn’t give it to me, understandably. But I didn’t need it, I found the ESC key. And Suddenly, the barrier vanished, and this began a lifelong obsession of "what’s behind this locked door, and how do I get there?"
 
-Yahoo and MSN chatrooms were my university. RATs like Sub7 and Netbus were my textbooks. People port-scanned AOL, invaded unsecured machines, and traded secrets in chatrooms. Anti-virus? Optional. Firewalls? A joke. The world of software was a sandbox, and I was a kid with a hammer, learning how to bend it.
+Initially Yahoo and MSN chatrooms were my training grounds. RATs like Sub7 and Netbus were thrown around like sweets, people port-scanned AOL IP ranges, invaded unsecured machines, and traded secrets in chatrooms. Anti-virus was basically optional, even if you had it, it was very easy to just kill the processes, the same with Firewalls for home users.
 
-I scavenged knowledge from Astalavista, New Order, milw0rm, and Phrack. At 16, I ran Slackware on a decrepit laptop, hooked to the phone line, crawling IRC servers with BitchX. Government sites, web 0-days, bragging rights—it was raw, chaotic, thrilling. Learning was brutal, hands-on, and unapologetic.
+I scavenged knowledge from Astalavista, New Order, milw0rm, and Phrack learning tricks from those who went before me. At 16, I ran Slackware on a decrepit old laptop, hooked to the phone line, I was crawling IRC servers with BitchX over 56k. Those times were very much different, peopled shared 0days with their friends, Government sites were defaced with simple file inclusion vulnerabilities and pretty much every site had SQL injection. It was raw, chaotic and thrilling. Learning was brutal, hands-on, and unapologetic. We didn't have HTB learning paths or YouTube videos to hold our hands, you either looked for text files or figured it out yourself. 
 
-I became a hunter of software weaknesses. PHP, C, assembly—I taught myself everything. CTFs like SmashTheStack were my gym. Pentesting became my ritual. My first “real” target: a single IP, nmap revealed RDP and a CCTV interface. One Java applet, a memory dump, and suddenly I had Domain Admin. That was the rush I chased ever after.
+As time passed I picked up some PHP, C and assembly. Basically whatever I needed just to get the job done. I spent hours reviewing source code looking for vulnerabilities, practicing my skills on CTF sites like SmashTheStack. Then I became a PHP dev, my boss knew I was interested in hacking and he gave me my first chance. My first “real” target: it was a single IP, nmap revealed RDP and a CCTV interface. I loaded the Java applet into my browser and used a tool to dump the asterisked password from memory, and suddenly I had Domain Admin thanks to my RDP access. That was the rush I chased ever after.
 
-I specialize in what most fear to touch:
+I know now a days, people who want to become hackers will tend to pick up a specialism and only focus on that. Because of my background I did this with Web App Security, however, I never let this limit me, I would look at anything that peaked my interest, this includes but is not limited to:
 
 * Reverse engineering obfuscated code & malware (IDA, Olly, dnSpy/Reflector, JD-GUI, Wireshark).
 * Finding vulnerabilities and developing exploits for internal apps, third-party software, appliances, and hardware devices.
-* Source code auditing across multiple languages (.NET, Go, Python, JavaScript, C, Erlang).
+* Mobile app testing, they combine two things I care alot about reverse engineering and web app hacking.
+* Source code auditing across multiple languages (.NET, PHP, Go, Python, JavaScript, C, Erlang etc) to find some tasty vulns.
 * Network pentesting and assumed breach scenarios.
 
-I’ve spent nights on VulnHub IRC, breaking into OffSec Proving Grounds beta labs before dawn, trading tricks with TheColonial until the boxes gave up their secrets. PortSwigger challenges? I owned XXE, SSRF, and Access Control pre-release—swag was just the cherry on top.
+I’ve spent nights on VulnHub IRC, breaking into OffSec Proving Grounds beta labs before dawn. They rewarded my efforts with a challenge coin, that I still have today.
 
-I live in the lab. If I’m not breaking systems, I’m reversing, dissecting, or hunting the next exploit. Security isn’t a job. It’s a compulsion, a craft, an obsession. Money is incidental—curiosity is everything.
+![challenge coin](/assets/images/challengecoin.jpg)
 
-This site? A digital fingerprint of existence. Notes, thoughts, chaos, proof that someone lived in the shadows, learned, and left a mark. Maybe it helps someone. Maybe it just helps future me.
+PortSwigger also ran some challenges that they gave swag out to the first 10 people who completed them. This was awesome, I managed to pull this off for [XXE](https://portswigger.net/web-security/hall-of-fame/xxe), [SSRF](https://portswigger.net/web-security/hall-of-fame/ssrf), and [Access Control](https://portswigger.net/web-security/hall-of-fame/access-control).
+
+I also found some bugs on Facebook and Yahoo's bug bounty programs when I had time.
+
+This site is basically a digital fingerprint of existence. It contains notes, thoughts and proof of what I've learned, so hopefully one day I can leave a mark. Maybe it helps someone. Maybe it just helps future me.
 
 Dedications:
 + To my partner and our three kids — everything I do is for you.
