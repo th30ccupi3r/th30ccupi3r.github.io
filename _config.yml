@@ -6,6 +6,7 @@ highlighter: rouge
 permalink: /blog/:title/
 startup_tag: th3_0ccupi3r
 github_url: https://github.com/th30ccupi3r
+linkedin: https://www.linkedin.com/in/ben-s-1274b139a/
 
 kramdown:
   input: GFM
