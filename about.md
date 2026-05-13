@@ -28,7 +28,7 @@ I know now a days, people who want to become hackers will tend to pick up a spec
 
 I’ve spent nights on VulnHub IRC, breaking into OffSec Proving Grounds beta labs before dawn. They rewarded my efforts with a challenge coin, that I still have today.
 
-![challenge coin](/assets/images/challengecoin.jpg)
+![challenge coin](/assets/images/challengecoin.jpeg)
 
 PortSwigger also ran some challenges that they gave swag out to the first 10 people who completed them. This was awesome, I managed to pull this off for [XXE](https://portswigger.net/web-security/hall-of-fame/xxe), [SSRF](https://portswigger.net/web-security/hall-of-fame/ssrf), and [Access Control](https://portswigger.net/web-security/hall-of-fame/access-control).
 
