@@ -1,6 +1,6 @@
 ---
 title: "And that's the way the Erlang Cookie crumbles... (Erlang RCE)"
-date: 2024-06-12 12:05:00 +0000
+date: 2026-05-12 12:05:00 +0000
 nick: t0
 rank: "@"
 nick_color: "#9cbcff"
